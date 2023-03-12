@@ -32,13 +32,13 @@ header.style.borderBottom ='solid 3px #000';
 var items =document.getElementsByClassName('list-group-item');
 console.log(items);
 console.log(items[1]);
-items[1].textContent ="Hello 2";
+items[1].textContent ="item 2";
 items[1].style.backgroundColor='yellow';
 var element = document.getElementById("i1");
 element.style.color='green';
 element.style.fontWeight="bold";
 
-items[2].style.backgroundColor='green';
+items[2].style.backgroundColor='yellow';
 
  for(var i=0; i<items.length;i++)
  {
@@ -50,3 +50,12 @@ items[2].style.backgroundColor='green';
 //console.log(li[1]);
 
 li[4].style.backgroundColor='blue';
+
+var secondItem = document.querySelector('.list-group-item:nth-child(2)');
+secondItem.style.backgroundColor='green';
+
+var thirdItem = document.querySelector('.list-group-item:nth-child(3)');
+thirdItem.style.visibility='hidden';
+
+
+
