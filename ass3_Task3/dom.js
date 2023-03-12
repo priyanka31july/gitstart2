@@ -33,7 +33,7 @@ var items =document.getElementsByClassName('list-group-item');
 console.log(items);
 console.log(items[1]);
 items[1].textContent ="item 2";
-items[1].style.backgroundColor='yellow';
+//items[1].style.backgroundColor='yellow';
 var element = document.getElementById("i1");
 element.style.color='green';
 element.style.fontWeight="bold";
@@ -52,11 +52,19 @@ items[2].style.backgroundColor='yellow';
 li[4].style.backgroundColor='blue';
 
 var secondItem = document.querySelector('.list-group-item:nth-child(2)');
-secondItem.style.backgroundColor='green';
+//secondItem.style.backgroundColor='green';
 
 
-var thirdItem = document.querySelector('.list-group-item:nth-child(3)');
-thirdItem.style.visibility='hidden';
+//var thirdItem = document.querySelector('.list-group-item:nth-child(3)');
+//thirdItem.style.visibility='hidden';
 
 
+secondItem.style.color='#006400';
 
+var odd = document.querySelectorAll('li:nth-child(odd)');
+
+for(var i=0; i<odd.length;i++)
+ {
+    odd[i].style.backgroundColor="green";
+
+ }
