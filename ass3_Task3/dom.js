@@ -45,3 +45,8 @@ items[2].style.backgroundColor='green';
     items[i].style.fontWeight="bold";
 
  }
+ var li =document.getElementsByTagName('li');
+//console.log(li);
+//console.log(li[1]);
+
+li[4].style.backgroundColor='blue';
