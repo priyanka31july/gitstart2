@@ -37,3 +37,11 @@ items[1].style.backgroundColor='yellow';
 var element = document.getElementById("i1");
 element.style.color='green';
 element.style.fontWeight="bold";
+
+items[2].style.backgroundColor='green';
+
+ for(var i=0; i<items.length;i++)
+ {
+    items[i].style.fontWeight="bold";
+
+ }
