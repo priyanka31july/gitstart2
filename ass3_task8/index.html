@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>JS For Beginners</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <h1>JS For Beginners</h1>
+    </header>
+
+    <section class="container">
+      <form id="my-form" onsubmit="saveToLocalStorage(event)">
+        <h1>Add User</h1>
+        
+          <label for="name">Name:</label>
+          <input type="text" id="username"  required>
+       
+          <label for="email">Email:</label>
+          <input type="text" id="emailId"   required>
+       
+            <label for="PhoneNo">Phone number:</label>
+            <input type="text" id="phonenumber">
+          
+        <input class="btn" type="submit" value="Submit">
+      </form>
+
+      <ul id='listOfitems'</ul>
+      <script>
+       function saveToLocalStorage(event)
+       {
+        event.preventDefault();
+        const name= event.target.username.value;
+        const email= event.target.emailId.value;
+        const Phonenumber= event.target.phonenumber.value;
+
+        
+       /* localStorage.setItem('name', name);
+        localStorage.setItem('email', email);
+        localStorage.setItem('Phonenumber', Phonenumber);*/
+        
+        let Obj={
+        name,
+        email ,
+        Phonenumber 
+   }
+      localStorage.setItem(Obj.email, JSON.stringify(Obj) );
+      showUseronScreen(Obj)
+  }
+  function showUseronScreen(Obj){
+     const parentEle=document.getElementById('listOfitems')
+   const childEle=document.createElement('li');
+     childEle.textContent = Obj.name+' - '+ Obj.email+ ' - '+ Obj.Phonenumber
+     parentEle.appendChild(childEle);
+
+    const deleteButton= document.createElement('input')
+
+    deleteButton.type='Button'
+    deleteButton.value='Delete'
+     deleteButton.onclick = () => {
+        localStorage.removeItem(Obj.email)
+        parentEle.removeChild(childEle)
+     }
+
+      childEle.appendChild(deleteButton)
+      parentEle.appendChild(childEle)
+  }
+
+      </script> 
+    
+  </body>
+</html>
+
