@@ -1,6 +1,6 @@
 const myObject = {
-    name: "Alice",
-    age: 30,
+    name: "seema",
+    age: 25,
     occupation: "Software Engineer"
   };
   
