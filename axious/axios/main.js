@@ -43,8 +43,7 @@ function updateTodo() {
     .then(res => showOutput(res))
     .catch(err => console.error(err));
 }
-
-
+ 
 // DELETE REQUEST
 function removeTodo() {
   axios

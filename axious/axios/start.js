@@ -27,7 +27,6 @@ function getTodos() {
     console.log('Custom Headers');
   }
   
-  
   // TRANSFORMING REQUESTS & RESPONSES
   function transformResponse() {
     console.log('Transform Response');
