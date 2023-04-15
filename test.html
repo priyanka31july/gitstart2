@@ -1,3 +1,85 @@
-<html>
-    <head>for</head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+    <title>JS For Beginners</title>
+    <h1>hi</h1>
+  </head>
+  
+      <script>
+    
+function updateLastUserActivityTime(user, posts, createPost, deleteLastPost, getPost) {
+  
+  console.log("Before creating post, last activity time:", user.lastActivityTime);
+
+  
+  user.lastActivityTime = new Date();
+
+
+  return createPost({title: 'New post', body: 'This is a new post'}).then((newPost) => {
+    console.log("New post created:", newPost);
+
+    
+    user.lastActivityTime = new Date();
+    console.log("After creating post, last activity time:", user.lastActivityTime);
+
+   
+    return deleteLastPost(getPost).then(() => {
+      console.log("Last post deleted.");
+      console.log("All posts:", posts);
+    });
+  });
+}
+
+// Define a user object with a null last activity time
+const user = {
+  lastActivityTime: null
+};
+
+// Define an array of posts
+const posts = [
+  { id: 1, title: "First post", body: "This is the first post" },
+  { id: 2, title: "Second post", body: "This is the second post" },
+  { id: 3, title: "Third post", body: "This is the third post" }
+];
+
+// Define a function that simulates creating a new post by returning a promise that resolves with a new post object
+function createPost(post) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const newPost = { id: posts.length + 1, ...post };
+      posts.push(newPost);
+      resolve(newPost);
+    }, 500);
+  });
+}
+
+// Define a function that simulates deleting the last post by returning a promise that resolves when the last post is deleted
+function deleteLastPost(getPost) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const lastPost = getPost(posts.length - 1);
+      console.log("Deleting post:", lastPost);
+      posts.pop();
+      resolve();
+    }, 500);
+  });
+}
+
+// Define a function that returns the post at the specified index
+function getPost(index) {
+  return posts[index];
+}
+
+// Call the updateLastUserActivityTime function with the defined parameters
+updateLastUserActivityTime(user, posts, createPost, deleteLastPost, getPost);
+
+      
+  
+
+    
+
+      </script> 
+    
+  </body>
 </html>
