@@ -40,7 +40,6 @@ function handleBuyButtonClick(event) {
         }
       }
 
-// Function to update candy quantity on the server using CRUD operations
 function updateCandyQuantityOnServer(candyId, newQuantity) {
   const apiUrl = "https://crudcrud.com/api/d9a01ca1d088409c90b2eae3a807b64e/candies"; 
   const updateUrl = `${apiUrl}/${candyId}`;
