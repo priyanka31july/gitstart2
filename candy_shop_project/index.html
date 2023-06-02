@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Candy Shop</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Candy Shop</h1>
+  
+  <form id="candyForm">
+    <label for="name">Candy Name:</label>
+    <input type="text" id="name" required><br><br>
+    
+    <label for="description">Candy Description:</label>
+    <textarea id="description" required></textarea><br><br>
+    
+    <label for="price">Candy Price:</label>
+    <input type="number" id="price" required><br><br>
+    
+    <label for="quantity">Candy Quantity:</label>
+    <input type="number" id="quantity" required><br><br>
+    
+    <button type="submit">Add </button>
+  </form>
+ 
+  <table id="candyTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
