@@ -41,14 +41,16 @@ function handleBuyButtonClick(event) {
       }
 
 function updateCandyQuantityOnServer(candyId, newQuantity) {
-  const apiUrl = "https://crudcrud.com/api/d9a01ca1d088409c90b2eae3a807b64e/candies"; 
+ function updateCandyQuantityOnServer(candyId, newQuantity) {
+  const apiUrl = "https://crudcrud.com/api/d9a01ca1d088409c90b2eae3a807b64e/candies"; // Replace YOUR_API_KEY with your actual API key
   const updateUrl = `${apiUrl}/${candyId}`;
   
   axios
-    .patch(updateUrl, { quantity: newQuantity })
+    .put(updateUrl, { quantity: newQuantity })
     .then(response => console.log("Quantity updated successfully:", response.data))
     .catch(error => console.error("Error updating quantity:", error));
 }
+
 */
 
 function handleFormSubmit(event) {
