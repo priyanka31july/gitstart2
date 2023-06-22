@@ -1,0 +1,31 @@
+<html lang="en">
+    <body>
+        <h2 style="text-align:center;color:blueviolet">Book a call</h2>
+        <h5 style="text-align:center;color:blueviolet">Book a call with representative</h5>
+        <hr width="100%" size="4px">
+        <form action="#" onsubmit="registeruser()">
+            Name: <input type="text" id="name" value="priyanka"required><br><br>
+            Email: <input type="text" id="email"required><br><br>
+            Phone no.: <input type="text" id="phone"required><br><br>
+            Time to call :<input type="date" id="date"requred><input type="time" id="time" required><br><br>
+            <input type="Submit"value="Book a call">
+        </form>
+        <script>
+            function registeruser(){
+                const name=document.getElementById('name').value;
+                console.log(name)
+                const email=document.getElementById('email').value;
+                console.log(email)
+                const phone=document.getElementById('phone').value;
+                console.log(phone)
+                const date=document.getElementById('date').value;
+                console.log(date)
+                const time=document.getElementById('time').value;
+                console.log(time)
+               
+              }
+        </script>
+
+    </body>
+
+</html>
