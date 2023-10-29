@@ -15,8 +15,7 @@
 <section class="container">
   <form id="my-form" onsubmit="submitForm(event)">
     <h1>Add User</h1>
-python
-Copy code
+
 <label for="name">Name:</label>
 <input type="text" id="username" required>
 
@@ -34,7 +33,7 @@ Copy code
     window.addEventListener('load', fetchData);
 
     function fetchData() {
-      axios.get("https://crudcrud.com/api/87210374246e4c439dda9d035e52706c/appointmentData")
+      axios.get("https://crudcrud.com/api/3c0b87e329fc4628855ea9fb42854087/candyshop")
         .then((response) => {
           console.log(response);
     
@@ -63,7 +62,7 @@ Copy code
 
       if (userId) {
         // Edit user details
-        axios.put("https://crudcrud.com/api/87210374246e4c439dda9d035e52706c/appointmentData/" + userId, obj)
+        axios.put("https://crudcrud.com/api/3c0b87e329fc4628855ea9fb42854087" + userId, obj)
           .then((response) => {
             console.log(response);
             updateUserData(obj, userId);
@@ -73,7 +72,7 @@ Copy code
           });
       } else {
         // Add new user
-        axios.post("https://crudcrud.com/api/87210374246e4c439dda9d035e52706c/appointmentData", obj)
+        axios.post("https://crudcrud.com/api/3c0b87e329fc4628855ea9fb42854087/candyshop", obj)
           .then((response) => {
             console.log(response);
             showUserOnScreen(response.data);
@@ -112,7 +111,7 @@ Copy code
     }
     
     function deleteUserData(id, element) {
-      axios.delete("https://crudcrud.com/api/87210374246e4c439dda9d035e52706c/appointmentData/" + id)
+      axios.delete("https://crudcrud.com/api/3c0b87e329fc4628855ea9fb42854087/candyshop/" + id)
         .then((response) => {
           console.log(response);
           element.remove();

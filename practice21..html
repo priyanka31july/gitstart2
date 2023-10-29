@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Candy shop</title>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Candy shop</h1>
+    </header>
+
+    <section class="container">
+      <form id="my-form" onsubmit="submitForm(event)">
+        <label for="name">Candy name:</label>
+        <input type="text" id="name" required>
+   
+        <label for="description">Candy description:</label>
+        <input type="text" id="description" required>
+
+        <label for="price">Candy Price:</label>
+        <input type="number" id="price" required>
+   
+        <label for="quantity">Candy quantity:</label>
+        <input type="number" id="quantity">
+      
+        <input class="btn" type="submit" value="submit">
+      </form>
+      <ul id='listOfItems'></ul>
+    </section>
+    
+    <script>
+      window.addEventListener('load', fetchData);
+
+      function fetchData() {
+        axios.get("https://crudcrud.com/api/608193ba03a1453ab47bae0f39a8964f/candyshop")
+          .then((response) => {
+            console.log(response);
+    
+            for (var i = 0; i < response.data.length; i++) {
+              showUserOnScreen(response.data[i])
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      }
+
+      function submitForm(event) {
+        event.preventDefault();
+        const name = event.target.name.value;
+        const description = event.target.description.value;
+        const price = event.target.price.value;
+        const quantity = event.target.quantity.value;
+
+        const obj = {
+          name,
+          description,
+          price,
+          quantity
+        };
+
+        saveDataToLocal(obj);
+        sendDataToServer(obj);
+      }
+
+      function saveDataToLocal(obj) {
+        const existingData = localStorage.getItem('candyData');
+        let candyData = [];
+
+        if (existingData) {
+          candyData = JSON.parse(existingData);
+        }
+
+        candyData.push(obj);
+        localStorage.setItem('candyData', JSON.stringify(candyData));
+      }
+
+      function sendDataToServer(obj) {
+        axios.post("https://crudcrud.com/api/608193ba03a1453ab47bae0f39a8964f/candyshop", obj)
+          .then((response) => {
+            console.log(response);
+            showUserOnScreen(obj);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      function showUserOnScreen(obj) {
+        const parentEle = document.getElementById('listOfItems');
+        const childEle = document.createElement('li');
+        childEle.textContent = obj.name + ' - ' + obj.description + ' - ' + obj.price + ' - ' + obj.quantity;
+        parentEle.appendChild(childEle);
+
+        const buy1Button = createBuyButton(1, obj);
+        const buy2Button = createBuyButton(2, obj);
+        const buy3Button = createBuyButton(3, obj);
+
+        childEle.appendChild(buy1Button);
+        childEle.appendChild(buy2Button);
+        childEle.appendChild(buy3Button);
+      }
+
+      function createBuyButton(quantityToBuy, obj) {
+        const buyButton = document.createElement('input');
+        buyButton.type = 'button';
+        buyButton.value = 'Buy ' + quantityToBuy;
+
+        buyButton.onclick = () => {
+          if (obj.quantity >= quantityToBuy) {
+            const newQuantity = obj.quantity - quantityToBuy;
+            updateCandyQuantityOnServer(obj._id, newQuantity);
+
+            obj.quantity = newQuantity;
+            const parentEle = document.getElementById('listOfItems');
+            const childEle = parentEle.querySelector(':last-child');
+            childEle.textContent = obj.name + ' - ' + obj.description + ' - ' + obj.price + ' - ' + obj.quantity;
+            parentEle.appendChild(childEle);
+
+            saveDataToLocal(obj);
+          }
+        };
+
+        return buyButton;
+      }
+
+      function updateCandyQuantityOnServer(id, newQuantity) {
+        axios.put("https://crudcrud.com/api/608193ba03a1453ab47bae0f39a8964f/candyshop/" + id, {
+          quantity: newQuantity
+        })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    </script>
+  </body>
+</html>

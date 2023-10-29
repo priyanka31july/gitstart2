@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Candy shop</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1 style="text-align: center">Candy shop</h1>
+    </header>
+
+    <section class="container" style="display: flex; flex-direction: column; align-items: center; text-align: center; margin: 0 auto; max-width: 400px;">
+      <form id="my-form" onsubmit="submitForm(event)" style="text-align: left; margin-top: 20px;">
+        <div style="margin-bottom: 10px;">
+          <label for="name">Candy name:</label>
+          &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" id="name" required />
+        </div>
+
+        <div style="margin-bottom: 10px;">
+          <label for="description">Candy description:</label>
+          &nbsp  <input type="text" id="description" required />
+        </div>
+
+        <div style="margin-bottom: 10px;">
+          <label for="price">Candy Price:</label>
+          &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  <input type="number" id="price" required />
+        </div>
+
+        <div>
+          <label for="quantity">Candy quantity:</label>
+          &nbsp &nbsp &nbsp &nbsp<input type="number" id="quantity" />
+        </div>
+
+        <input class="btn" type="submit" value="submit" />
+      </form>
+
+      <ul id="listOfItems" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <!-- Your list items will be added here -->
+      </ul>
+    </section>
+
+    
+  
+    <script>
+       window.addEventListener('load', fetchData);
+
+       async function fetchData()
+       {
+        try{
+          const response=await axios.get('https://crudcrud.com/api/3f6d5c2fc8794d28a1e9aef18676b50a/candyshop');
+          console.log(response);
+          for(let i=0;i<deta.length;i++)
+          {
+             showuseronscreen(response.data[i]);
+          }
+         
+        }catch(error)
+        {
+          console.log(error);
+        }
+      }
+
+      async function submitform(event)
+      {
+        const name=event.target.name.value;
+        const description=event.target.description.value;
+        const price=event.target.price.value;
+        const quantity=event.target.quantity.value;
+
+        let obj={
+          name,
+          description,
+          price,
+          quantity
+        }
+        
+        try{
+       const response=await axios.post('https://crudcrud.com/api/3f6d5c2fc8794d28a1e9aef18676b50a/candyshop/', obj)
+       console.log(response);
+        }catch(error)
+        {
+          console.log(error);
+        }
+
+    
+      }
+
+       function showuseronscreen(obj)
+    {
+
+        const parentEle=document.getElementById('listOfItems');
+        const childEle=document.createElement('li');
+        childEle.textContent=obj.name+' - '+obj.description+' - '+obj.price+' - '+obj.quantity;
+        parentEle.appendChild(childEle);
+
+        const buy1Button=document.createElement('input');
+        buy1Button.type='button';
+        buy1Button.value='buy 1';
+
+        buy1Button.onclick=async()=>{
+          if(obj.quantity>=1)
+          {
+           const newQuantity= obj.quantity-1;
+
+           quantity=newQuantity;
+           await updaequantityonserver(obj._id,obj.name,obj.description,obj.price,newQuantity);
+           childEle.textContent=obj.name+' - '+obj.description+' - '+obj.price+' - '+obj.quantity;
+           childEle.appendChild(buy1Button);
+           childEle.appendChild(buy2Button);
+           childEle.appendChild(buy3Button);
+
+          }
+          childEle.appendChild(buy1Button);
+          parentEle.appendChild(childEle);
+        
+         
+        const buy2Button=document.createElement('input');
+        buy2Button.type='button';
+        buy2Button.value='buy 2';
+
+        buy2Button.onclick=async()=>
+        {
+          if(obj.quantity>=2)
+          {
+            const newQuantity=quantity-2;
+
+            quantity=newQuantity;
+            await updaequantityonserver(obj._id,obj.name,obj.description,obj.price,newQuantity)
+            childEle.textContent=obj.name+' - '+obj.description+' - '+obj.price+' - '+obj.quantity;
+            childEle.appendChild(buy1Button);
+            childEle.appendChild(buy2Button);
+            childEle.appendChild(buy3Button);
+          }
+          childEle.appendChild(buy2Button);
+          perentEle.appendChild(childEle);
+
+
+        
+
+        const buy3Button=document.createElement('input');
+        buy3Button.type='button';
+        buy3Button.value='buy 3';
+
+        buy3Button.onclick=async()=>
+        {
+          if(obj.quantity>=2)
+          {
+            const newQuantity=quantity-2;
+
+            quantity=newQuantity;
+            await updaequantityonserver(obj._id,obj.name,obj.description,obj.price,newQuantity)
+            childEle.textContent=obj.name+' - '+obj.description+' - '+obj.price+' - '+obj.quantity;
+            childEle.appendChild(buy1Button);
+            childEle.appendChild(buy2Button);
+            childEle.appendChild(buy3Button);
+          }
+          childEle.appendChild(buy3Button);
+          perentEle.appendChild(childEle);
+          
+
+        }
+
+   async function  updaequantityonserver(id,name,description,price,newQuantity)
+   {
+    try
+    {
+  const response=  await axios.put('https://crudcrud.com/api/3f6d5c2fc8794d28a1e9aef18676b50a/candyshop/' +id,
+   {
+    name:name,
+    description:description,
+    price:price,
+    quantity:newQuantity
+   });
+   console.log(response);
+  }
+   catch(error)
+   {
+   console.log(error);
+   }
+   
+        
+
+}
+
+       
+
+
+
+    </script>
+
+
+
+
+
+
+
+    </form>
+
+
+
+
+
+
+ 
+</body>
+
+
+
+
+
+</html>

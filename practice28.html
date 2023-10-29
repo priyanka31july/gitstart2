@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Candy shop</title>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Candy shop</h1>
+    </header>
+
+<section class="container">
+  <form id="my-form" onsubmit="submitForm(event)">
+ 
+    
+    <label for="name">Candy name:</label>
+    <input type="text" id="name" required>
+   
+    <label for="description">Candy description:</label>
+    <input type="text" id="description" required>
+
+     <label for="price">Candy Price:</label>
+    <input type="number" id="price" required>
+   
+    <label for="quantity">Candy quantity:</label>
+    <input type="number" id="quantity">
+      
+    <input class="btn" type="submit" value="submit">
+  </form>
+     <ul id='listOfItems'></ul>
+
+   <script>
+   
+    window.addEventListener('load', fetchData);
+
+    async function fetchData() {
+        try {
+          const response = await axios.get("https://crudcrud.com/api/a89a82e645f741959d59fa1b5b508e04/candyshop");
+          console.log(response);
+    
+          for (let i = 0; i < response.data.length; i++) {
+            showUserOnScreen(response.data[i]);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+    async function submitForm(event) {
+        event.preventDefault();
+        const name = event.target.name.value;
+        const description = event.target.description.value;
+        const price = event.target.price.value;
+        const quantity = event.target.quantity.value;
+
+        const obj = {
+          name,
+          description,
+          price,
+          quantity
+        };
+
+        try {
+          const response = await axios.post("https://crudcrud.com/api/a89a82e645f741959d59fa1b5b508e04/candyshop", obj);
+          console.log(response);
+          showUserOnScreen(obj);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+
+  function showUserOnScreen(obj) {
+  const parentEle = document.getElementById('listOfItems');
+  const childEle = document.createElement('li');
+  childEle.textContent = obj.name + ' - ' + obj.description + ' - '+ obj.price + ' - '+ obj.quantity;
+  parentEle.appendChild(childEle);
+
+        const buy1Button = createBuyButton(1, obj);
+        const buy2Button = createBuyButton(2, obj);
+        const buy3Button = createBuyButton(3, obj);
+
+        childEle.appendChild(buy1Button);
+        childEle.appendChild(buy2Button);
+        childEle.appendChild(buy3Button);
+      }
+
+      function createBuyButton(quantity, obj) {
+        const button = document.createElement('input');
+        button.type = 'button';
+        button.value = `Buy ${quantity}`;
+
+        button.onclick = async () => {
+          if (obj.quantity >= quantity) {
+            const newQuantity = obj.quantity - quantity;
+            try {
+              await updateCandyQuantityOnServer(obj._id, newQuantity, obj.name, obj.descri, obj.price);
+              obj.quantity = newQuantity;
+              const childEle = button.parentNode;
+              childEle.textContent = obj.name + ' - ' + obj.description + ' - ' + obj.price + ' - ' +obj.quantity;
+              childEle.appendChild(createBuyButton(1, obj));
+              childEle.appendChild(createBuyButton(2, obj));
+              childEle.appendChild(createBuyButton(3, obj));
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        };
+
+        return button;
+      }
+
+async function updateCandyQuantityOnServer(id, newQuantity, name, descri, price)  {
+        try {
+          const response = await axios.put("https://crudcrud.com/api/a89a82e645f741959d59fa1b5b508e04/candyshop/" +id, {
+          quantity: newQuantity
+          });
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+ </script> 
+ </section> 
+</body>
+</html>

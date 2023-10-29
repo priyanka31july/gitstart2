@@ -1,0 +1,182 @@
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Candy shop</title>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Candy shop</h1>
+    </header>
+
+<section class="container">
+  <form id="my-form" onsubmit="submitForm(event)">
+ 
+    
+    <label for="name">Candy name:</label>
+    <input type="text" id="name" required>
+   
+    <label for="description">Candy description:</label>
+    <input type="text" id="description" required>
+
+     <label for="price">Candy Price:</label>
+    <input type="number" id="price" required>
+   
+    <label for="quantity">Candy quantity:</label>
+    <input type="number" id="quantity">
+      
+    <input class="btn" type="submit" value="submit">
+  </form>
+     <ul id='listOfItems'></ul>
+
+     
+   <script>
+   
+    window.addEventListener('load', fetchData);
+
+    function fetchData() {
+      axios.get("https://crudcrud.com/api/f95f6be035bc4b19ac32487ba47b5fb9/candyshop")
+        .then((response) => {
+          console.log(response);
+
+          for(var i=0; i<response.data.length; i++) {
+            showUserOnScreen(response.data[i])
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+    
+    function submitForm(event) {
+      event.preventDefault();
+      const name = event.target.name.value;
+      const description = event.target.description.value;
+      const price=event.target.price.value;
+      const quantity = event.target.quantity.value;
+
+      let obj = {
+        name,
+        description,
+        price,
+        quantity
+      };
+
+      axios.post("https://crudcrud.com/api/f95f6be035bc4b19ac32487ba47b5fb9/candyshop", obj)
+        .then((response) => {
+          console.log(response);
+          showUserOnScreen(obj);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    
+    function showUserOnScreen(obj) {
+  const parentEle = document.getElementById('listOfItems');
+  const childEle = document.createElement('li');
+  childEle.textContent = obj.name + ' - ' + obj.description + ' - '+ obj.price + ' - '+ obj.quantity;
+  parentEle.appendChild(childEle);
+
+  const buy1Button = document.createElement('input');
+  buy1Button.type = 'button';
+  buy1Button.value = 'Buy 1';
+  
+  buy1Button.onclick = () => {
+    if (obj.quantity >= 1) {
+      const newQuantity = obj.quantity - 1;
+     updateCandyQuantityOnServer(obj._id, newQuantity);
+     
+      obj.quantity = newQuantity; 
+      childEle.textContent = obj.name + ' - ' + obj.description + ' - '+ obj.price + ' - '+ obj.quantity; 
+      childEle.appendChild(buy1Button);
+      childEle.appendChild(buy2Button);
+      childEle.appendChild(buy3Button);
+      
+    }
+  };
+
+  childEle.appendChild(buy1Button);
+  parentEle.appendChild(childEle);
+
+
+  const buy2Button = document.createElement('input');
+  buy2Button.type = 'button';
+  buy2Button.value = 'Buy 2';
+  
+  buy2Button.onclick = () => {
+    if (obj.quantity >= 2) {
+      const newQuantity = obj.quantity - 2;
+      updateCandyQuantityOnServer(obj._id,newQuantity);
+     
+      obj.quantity = newQuantity; 
+      childEle.textContent = obj.name + ' - ' + obj.description + ' - '+ obj.price + ' - '+ obj.quantity;
+      
+      childEle.appendChild(buy1Button);
+      childEle.appendChild(buy2Button);
+      childEle.appendChild(buy3Button);
+    }
+  };
+
+  childEle.appendChild(buy2Button);
+  parentEle.appendChild(childEle);
+  
+
+
+  const buy3Button = document.createElement('input');
+ 
+  buy3Button.type = 'button';
+  buy3Button.value = 'Buy 3';
+  
+  buy3Button.onclick = () => {
+    if (obj.quantity >= 3) {
+      const newQuantity = obj.quantity - 3;
+      updateCandyQuantityOnServer(obj._id, newQuantity);
+     
+      obj.quantity = newQuantity; 
+      childEle.textContent = obj.name + ' - ' + obj.description + ' - '+ obj.price + ' - '+ obj.quantity;
+      childEle.appendChild(buy1Button);
+      childEle.appendChild(buy2Button);
+      childEle.appendChild(buy3Button);
+    }
+  };
+
+  childEle.appendChild(buy3Button);
+  parentEle.appendChild(childEle);
+}
+
+
+
+function updateCandyQuantityOnServer(id, newQuantity) {
+  axios.put("https://crudcrud.com/api/f95f6be035bc4b19ac32487ba47b5fb9/candyshop/" +id, {
+   quantity : newQuantity
+  })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+ }
+  
+  </script> 
+
+</section>
+ </body>
+ </html>

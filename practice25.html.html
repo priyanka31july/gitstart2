@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>candy shop</title>
+
+<meta charset="UTF-08"/>
+<meta name="viewport" content="width=device-width intial-scale=1.0"/>
+<link rel="stylesheet" type="text/css" href="center1.css"/>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+<body>
+<header>
+    <h1 style=text-align:center>Candy shop</h1> 
+</header>
+  <section class="container">
+     <form id="my-form" onsubmit="submitform(event)">
+    
+       <div class="form-group">
+       <label for="name">Candy name:</label>
+       <input type="text" id="name" required/>
+       </div>
+
+       <div class="form-group">
+        <label for="description" >Candy description:</label>
+        <input type="text" id="description" required/>
+       </div>
+       
+      <div class="form-group">
+       <label for="price">Candy price:</label>
+       <input type="number" id="price" required/>
+      </div>
+     
+    
+      <div class="form-group">
+        <label for="quantity">Candy quantity:</label>
+        <input type="number" id="quantity" required/>
+      </div>
+      
+      <div class="form-group">
+        <label for="price">Candy price:</label>
+        <input type="number" id="price" required/>
+      </div>
+
+      <input class="btn" type="submit" value= "submit"/>
+     </form>
+
+     <ul id="listofitems"> </ul>
+
+</section>
+<script>
+  const apiUrl=http//www.
+ window.addEventListener('load', fetchdata)
+
+  async function fetchdata()
+  {
+    try{
+     const result= await axios.get(apiUrl)
+     console.log(result)
+     for(let i=0;i<=responce.data.length;i++)
+     {
+        showuseronscreen(responce.data[i])
+     }
+    }catch(error)
+    {
+      console.log(error)
+    }
+  }
+
+async function submitform(event)
+{
+  event.preventDefault()
+  let obj={
+    name,
+    description,
+    price,
+    quantity
+  }
+
+   const name=event.target.name.value;
+   const description=event.target.description.value;
+   const quantity=event.target.quantity.value;
+   const price=event.target.price.value;
+
+  try{
+   const responce= await.axios.post(apiUrl,obj)
+    console.log(responce)
+    obj._id=responce.data._id
+    showuseronscreen(obj)
+  }catch(error)
+  {
+    console.log(error)
+  }
+  
+}
+async function showuseronscreen()
+{
+  const parentEle=document.getElemntbyId('listofitemes');
+  const childEle=document.getElementById('li');
+
+childEle.textContent= obj.name+'  '+obj.description+'  ' +obj.quantity+'  '+obj.price
+
+parentEle.appendChild(childEle);
+
+const buy1Button=document.createElement('input')
+buy1Button.type= 'button';
+buy1Button.value='Buy 1';
+
+buy1Button.onclick=async()=>
+{
+  if(obj.quantity>=1)
+  {
+    const newquantity=obj.quantity-2;
+
+    await updatecandyonserver(obj._id,obj.name,newquantity,obj.price,obj.description)
+
+    obj.quantity= newquantity
+
+    childEle.textContent= obj.name+'  '+obj.description+'  ' +obj.quantity+'  '+obj.price
+    childEle.appendChild('buybutton1')
+    childEle.appendChild('buybutton2')
+    childEle.appendChild('buybutton3')
+    
+    
+  }
+  childEle.appendChild('buybutton1')
+  parentEle.appendChild(childEle);
+
+
+}
+
+
+const buybutton2=document.createElement('input')
+buybutton2.type='button';
+buybutton.value='buy 2'
+
+buybutton2.onclick=async()=>
+{
+  if(obj.quantity>=2)
+  {
+    const newquantity=obj.quantity-2
+     
+    await.upadatecandyonserver(obj._id,name,quantity,description.price)
+
+    childEle.textContent=obj.name+' '+obj.description+' '+obj.quantity+' '+obj.price
+
+    childEle.appendChild('buybutton1')
+    childEle.appendChild('buybutton2')
+    childEle.appendChild('buybutton3')
+
+  }
+  childEle.appendChild('buybutton2')
+  parentEle.appendChild(childEle)
+}
+
+}
+async function updatecandyonserver(id,name,quantity,description.price)
+{
+   try{
+    await axios.put(${apiUrl}/${id},
+    {
+      name:name,
+      description:description,
+      quantity:quantity,
+      price:price
+    }
+     );
+    
+    console.log(responce)
+
+   }catch(error)
+   {
+    console.log(error)
+   }
+}
+
+
+</script>
+</body>
+
+</html>

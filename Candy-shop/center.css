@@ -1,0 +1,46 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+ 
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    margin: 20px;
+  }
+  
+  .form-group {
+    display: flex; 
+    align-items: center; 
+    margin: 10px ; 
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .form-group label {
+    width: 150px; 
+    text-align: left;
+   
+  }
+
+
+li input[type="button"] {
+  margin-right: 10px;
+}
+
+
+li {
+  margin-bottom: 10px;
+  
+}
+
+
+

@@ -36,7 +36,7 @@
     window.addEventListener('load', fetchData);
 
     function fetchData() {
-      axios.get("https://crudcrud.com/api/87210374246e4c439dda9d035e52706c/appointmentData")
+      axios.get("https://crudcrud.com/api/a89a82e645f741959d59fa1b5b508e04/appointmentData")
         .then((response) => {
           console.log(response);
     
@@ -61,7 +61,7 @@
         phoneNumber
       };
 
-      axios.post("https://crudcrud.com/api/87210374246e4c439dda9d035e52706c/appointmentData", obj)
+      axios.post("https://crudcrud.com/api/a89a82e645f741959d59fa1b5b508e04/appointmentData", obj)
         .then((response) => {
           console.log(response);
           showUserOnScreen(obj);
@@ -100,7 +100,7 @@
     }
     
     function deleteUserData(id, element) {
-      axios.delete("https://crudcrud.com/api/87210374246e4c439dda9d035e52706c/appointmentData/" + id)
+      axios.delete("https://crudcrud.com/api/a89a82e645f741959d59fa1b5b508e04/appointmentData/" + id)
         .then((response) => {
           console.log(response);
           element.remove();

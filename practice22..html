@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Candy shop</title>
@@ -37,7 +37,7 @@
       <ul id="listOfItems"></ul>
      
       <script>
-         const apiUrl = 'https://crudcrud.com/api/2c06ce21114d4846aeffadd5a33ca545/candyshop'; 
+         const apiUrl = 'https://crudcrud.com/api/f3e7b9cfef974fcba018428525f33bb9/candyshop'; 
 
         window.addEventListener('load', fetchData);
 
@@ -53,7 +53,7 @@
             console.log(error);
           }
         }
-     
+        
         async function submitForm(event) {
           event.preventDefault();
           const name = event.target.name.value;
@@ -90,7 +90,8 @@
           buy1Button.type = 'button';
           buy1Button.value = 'Buy 1';
 
-          buy1Button.onclick = async () => {            if (obj.quantity >= 1) {
+          buy1Button.onclick = async () => {
+            if (obj.quantity >= 1) {
               const newQuantity = obj.quantity - 1;
               
               await updateCandyQuantityOnServer(obj._id, newQuantity, obj.name, obj.description, obj.price);

@@ -1,14 +1,17 @@
 <html lang="en">
+   
     <body>
         <h2 style="text-align:center;color:blueviolet">Book a call</h2>
         <h5 style="text-align:center;color:blueviolet">Book a call with representative</h5>
         <hr width="100%" size="4px">
         <form action="#" onsubmit="registeruser()">
-            Name: <input type="text" id="name" value="priyanka"required><br><br>
+            <label for="name">Name:</label> <input type="text" id="name" value="priyanka"required><br><br>
+            
             Email: <input type="text" id="email"required><br><br>
             Phone no.: <input type="text" id="phone"required><br><br>
             Time to call :<input type="date" id="date"requred><input type="time" id="time" required><br><br>
             <input type="Submit"value="Book a call">
+            
         </form>
         <script>
             function registeruser(){

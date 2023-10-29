@@ -1,51 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
     <title>Candy shop</title>
     <link rel="stylesheet" type="text/css" href="center.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
-
   <body>
     <header>
       <h1 style="text-align:center">Candy shop</h1>
     </header>
 
-      <form id="my-form" onsubmit="submitForm(event)">
-        <div class="form-group">
-          <label for="name">Candy name:</label>
-          <input type="text" id="name" required />
-        </div>
-        <div class="form-group">
-          <label for="description">Candy description:</label>
-          <input type="text" id="description" required />
-        </div>
-        <div class="form-group">
-          <label for="price">Candy Price:</label>
-          <input type="number" id="price" required />
-        </div>
-        <div class="form-group">
-          <label for="quantity">Candy quantity:</label>
-          <input type="number" id="quantity" />
-        </div><br>
+    <section class="container">
       
+      <form id="my-form" onsubmit="submitForm(event)">
+        <label for="name">Candy name:</label>
+        <input type="text" id="name" required />
+
+        <label for="description">Candy description:</label>
+        <input type="text" id="description" required />
+
+        <label for="price">Candy Price:</label>
+        <input type="number" id="price" required />
+
+        <label for="quantity">Candy quantity:</label>
+        <input type="number" id="quantity" />
+
         <input class="btn" type="submit" value="submit" />
       </form>
-      
-       
-    
-      <ul id="listOfItems"></ul>
      
-      <script>
-         const apiUrl = 'https://crudcrud.com/api/2c06ce21114d4846aeffadd5a33ca545/candyshop'; 
+      <ul id="listOfItems"></ul>
 
+      <script>
         window.addEventListener('load', fetchData);
 
         async function fetchData() {
           try {
-            const response = await axios.get(apiUrl)
+            const response = await axios.get('https://crudcrud.com/api/3f6d5c2fc8794d28a1e9aef18676b50a/candyshop')
             console.log(response);
-
+            
             for (let i = 0; i < response.data.length; i++) {
               showUserOnScreen(response.data[i]);
             }
@@ -53,7 +48,7 @@
             console.log(error);
           }
         }
-     
+        
         async function submitForm(event) {
           event.preventDefault();
           const name = event.target.name.value;
@@ -69,9 +64,10 @@
           };
 
           try {
-            const response = await axios.post(apiUrl, obj )
+            const response = await axios.post('https://crudcrud.com/api/3f6d5c2fc8794d28a1e9aef18676b50a/candyshop', obj )
             console.log(response);
             obj._id = response.data._id
+            
             showUserOnScreen(obj);
           } catch (error) {
             console.log(error);
@@ -81,7 +77,7 @@
         function showUserOnScreen(obj) {
           const parentEle = document.getElementById('listOfItems');
           const childEle = document.createElement('li');
-          childEle.textContent =obj.name + '   ' + obj.description + '  ' + obj.price + '  ' + obj.quantity+' ';
+          childEle.textContent =obj.name + ' - ' + obj.description + ' - ' + obj.price + ' - ' + obj.quantity;
               
           
           parentEle.appendChild(childEle);
@@ -90,20 +86,20 @@
           buy1Button.type = 'button';
           buy1Button.value = 'Buy 1';
 
-          buy1Button.onclick = async () => {            if (obj.quantity >= 1) {
+          buy1Button.onclick = async () => {
+            if (obj.quantity >= 1) {
               const newQuantity = obj.quantity - 1;
               
               await updateCandyQuantityOnServer(obj._id, newQuantity, obj.name, obj.description, obj.price);
 
               obj.quantity = newQuantity;
-              childEle.textContent = obj.name + '  ' + obj.description + '  ' + obj.price + '  ' + obj.quantity+' ';
+              childEle.textContent = obj.name + ' - ' + obj.description + ' - ' + obj.price + ' - ' + obj.quantity;
               
               
               childEle.appendChild(buy1Button);
               childEle.appendChild(buy2Button);
               childEle.appendChild(buy3Button);
             }
-           
           };
 
           childEle.appendChild(buy1Button);
@@ -119,7 +115,7 @@
               await updateCandyQuantityOnServer(obj._id, newQuantity, obj.name, obj.description, obj.price);
               
               obj.quantity = newQuantity;
-              childEle.textContent = obj.name + '  ' + obj.description + '  ' + obj.price + '  ' + obj.quantity+' ';
+              childEle.textContent = obj.name + ' - ' + obj.description + ' - ' + obj.price + ' - ' + obj.quantity;
               
               childEle.appendChild(buy1Button);
               childEle.appendChild(buy2Button);
@@ -129,7 +125,7 @@
 
           childEle.appendChild(buy2Button);
           parentEle.appendChild(childEle);
-          
+
           const buy3Button = document.createElement('input');
           buy3Button.type = 'button';
           buy3Button.value = 'Buy 3';
@@ -137,11 +133,10 @@
           buy3Button.onclick = async () => {
             if (obj.quantity >= 3) {
               const newQuantity = obj.quantity - 3;
-              
               await updateCandyQuantityOnServer(obj._id, newQuantity, obj.name, obj.description, obj.price);
 
               obj.quantity = newQuantity;
-              childEle.textContent = obj.name + '  ' + obj.description + '  ' + obj.price + '  ' + obj.quantity+' ';
+              childEle.textContent = obj.name + ' - ' + obj.description + ' - ' + obj.price + ' - ' + obj.quantity;
 
               childEle.appendChild(buy1Button);
               childEle.appendChild(buy2Button);
@@ -150,15 +145,14 @@
           };
 
           childEle.appendChild(buy3Button);
-         parentEle.appendChild(childEle);
-         
+          parentEle.appendChild(childEle);
         }
 
         async function updateCandyQuantityOnServer(id, newQuantity, name, description, price) 
         {
           try 
             {
-            const response = await axios.put(`${apiUrl}/${id}`,
+            const response = await axios.put(`https://crudcrud.com/api/3f6d5c2fc8794d28a1e9aef18676b50a/candyshop/${id}`,
               {
                 name: name,
                 description: description,
@@ -172,6 +166,6 @@
           }
         }
       </script>
-    
+    </section>
   </body>
-</html> 
+</html>

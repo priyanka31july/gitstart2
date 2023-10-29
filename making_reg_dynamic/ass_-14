@@ -9,7 +9,7 @@
 const posts = [
   { title: 'Post one', body: 'This is post one' },
   { title: 'Post two', body: 'This is post two' }
-];
+] ;
 let lastActivityTime = null;
 
 function getPosts() {
@@ -59,8 +59,7 @@ updateLastUserActivityTime()
   .then(() => {
     console.log('Activity time before creating post:', lastActivityTime);
     return createPost({ title: 'Post three', body: 'This post is three' });
-
-  })
+ })
   .then(() => {
     return updateLastUserActivityTime();
   })
