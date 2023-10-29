@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Candy shop</title>
+    <link rel="stylesheet" type="text/css" href="center.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <h1 style="text-align:center">Candy shop</h1>
+    </header>
+
+      <form id="my-form" onsubmit="submitForm(event)">
+        <div class="form-group">
+          <label for="name">Candy name:</label>
+          <input type="text" id="name" required />
+        </div>
+        <div class="form-group">
+          <label for="description">Candy description:</label>
+          <input type="text" id="description" required />
+        </div>
+        <div class="form-group">
+          <label for="price">Candy Price:</label>
+          <input type="number" id="price" required />
+        </div>
+        <div class="form-group">
+          <label for="quantity">Candy quantity:</label>
+          <input type="number" id="quantity" />
+        </div><br>
+      
+        <input class="btn" type="submit" value="submit" />
+      </form>
+      
+       
+    
+      <ul id="listOfItems"></ul>
+     
+      <script>
+         const apiUrl = 'https://crudcrud.com/api/2c06ce21114d4846aeffadd5a33ca545/candyshop'; 
+
+        window.addEventListener('load', fetchData);
+
+        async function fetchData() {
+          try {
+            const response = await axios.get(apiUrl)
+            console.log(response);
+
+            for (let i = 0; i < response.data.length; i++) {
+              showUserOnScreen(response.data[i]);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        
+        async function submitForm(event) {
+          event.preventDefault();
+          const name = event.target.name.value;
+          const description = event.target.description.value;
+          const price = event.target.price.value;
+          const quantity = event.target.quantity.value;
+
+          let obj = {
+            name,
+            description,
+            price,
+            quantity,
+          };
+
+          try {
+            const response = await axios.post(apiUrl, obj )
+            console.log(response);
+            obj._id = response.data._id
+            showUserOnScreen(obj);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+
+        function showUserOnScreen(obj) {
+          const parentEle = document.getElementById('listOfItems');
+          const childEle = document.createElement('li');
+          childEle.textContent =obj.name + '   ' + obj.description + '  ' + obj.price + '  ' + obj.quantity+' ';
+              
+          
+          parentEle.appendChild(childEle);
+
+          const buy1Button = document.createElement('input');
+          buy1Button.type = 'button';
+          buy1Button.value = 'Buy 1';
+
+          buy1Button.onclick = async () => {            if (obj.quantity >= 1) {
+              const newQuantity = obj.quantity - 1;
+              
+              await updateCandyQuantityOnServer(obj._id, newQuantity, obj.name, obj.description, obj.price);
+
+              obj.quantity = newQuantity;
+              childEle.textContent = obj.name + '  ' + obj.description + '  ' + obj.price + '  ' + obj.quantity+' ';
+              
+              
+              childEle.appendChild(buy1Button);
+              childEle.appendChild(buy2Button);
+              childEle.appendChild(buy3Button);
+            }
+           
+          };
+
+          childEle.appendChild(buy1Button);
+          parentEle.appendChild(childEle);
+
+          const buy2Button = document.createElement('input');
+          buy2Button.type = 'button';
+          buy2Button.value = 'Buy 2';
+
+          buy2Button.onclick = async () => {
+            if (obj.quantity >= 2) {
+              const newQuantity = obj.quantity - 2;
+              await updateCandyQuantityOnServer(obj._id, newQuantity, obj.name, obj.description, obj.price);
+              
+              obj.quantity = newQuantity;
+              childEle.textContent = obj.name + '  ' + obj.description + '  ' + obj.price + '  ' + obj.quantity+' ';
+              
+              childEle.appendChild(buy1Button);
+              childEle.appendChild(buy2Button);
+              childEle.appendChild(buy3Button);
+            }
+          };
+
+          childEle.appendChild(buy2Button);
+          parentEle.appendChild(childEle);
+          
+          const buy3Button = document.createElement('input');
+          buy3Button.type = 'button';
+          buy3Button.value = 'Buy 3';
+
+          buy3Button.onclick = async () => {
+            if (obj.quantity >= 3) {
+              const newQuantity = obj.quantity - 3;
+              
+              await updateCandyQuantityOnServer(obj._id, newQuantity, obj.name, obj.description, obj.price);
+
+              obj.quantity = newQuantity;
+              childEle.textContent = obj.name + '  ' + obj.description + '  ' + obj.price + '  ' + obj.quantity+' ';
+
+              childEle.appendChild(buy1Button);
+              childEle.appendChild(buy2Button);
+              childEle.appendChild(buy3Button);
+            }
+          };
+
+          childEle.appendChild(buy3Button);
+         parentEle.appendChild(childEle);
+         
+        }
+
+        async function updateCandyQuantityOnServer(id, newQuantity, name, description, price) 
+        {
+          try 
+            {
+            const response = await axios.put(`${apiUrl}/${id}`,
+              {
+                name: name,
+                description: description,
+                price: price,
+                quantity: newQuantity,
+              }
+            );
+            console.log(response);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      </script>
+    
+  </body>
+</html> 
