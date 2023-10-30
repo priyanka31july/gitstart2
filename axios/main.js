@@ -150,7 +150,7 @@ function cancelToken() {
   }
 }
 
-// INTERCEPTING REQUESTS & RESPONSES
+// INTERCEPTING REQUESTS & RESPONSE
 axios.interceptors.request.use(
   config => {
     console.log(

@@ -45,7 +45,7 @@ function getTodos() {
   
   // INTERCEPTING REQUESTS & RESPONSES
   
-  // AXIOS INSTANCES
+  // AXIOS INSTANCS
   
   // Show output in browser
   function showOutput(res) {
