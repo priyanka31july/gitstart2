@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+    <title>JS For Beginners</title>
+    <h1>hi</h1>
+  </head>
+<script>
+const posts = [
+  { title: 'Post one', body: 'This is post one' },
+  { title: 'Post two', body: 'This is post two' }
+];
+let lastActivityTime = null;
+
+function getPosts() {
+  setTimeout(() => {
+    let output = '';
+    for (let i = 0; i < posts.length; i++) {
+      output += `<li>${posts[i].title}</li>`;
+    }
+    document.body.innerHTML = output;
+  }, 1000);
+}
+
+function createPost(post) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      posts.push(post);
+      resolve();
+    }, 1000);
+  });
+}
+
+function deletePost() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (posts.length !== 0) {
+        posts.pop();
+        resolve();
+      } else {
+        reject('Array is empty now');
+      }
+    }, 1000);
+  });
+}
+
+function updateLastUserActivityTime() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      lastActivityTime = new Date().toISOString();
+      console.log('Current activity time:', lastActivityTime);
+      resolve();
+    }, 1000);
+  });
+}
+
+updateLastUserActivityTime()
+  .then(() => {
+    console.log('Activity time before creating post:', lastActivityTime);
+    return createPost({ title: 'Post three', body: 'This post is three' });
+  })
+  .then(() => {
+    return updateLastUserActivityTime();
+  })
+  .then(() => {
+    console.log('Activity time after creating post:', lastActivityTime);
+    console.log('All posts:', posts);
+    return deletePost();
+  })
+  .then(() => {
+    return updateLastUserActivityTime();
+  })
+  .then(() => {
+    console.log('Activity time after deleting post:', lastActivityTime);
+    console.log('New posts:', posts);
+  })
+  .catch((err) => console.log(err));
+</script>
